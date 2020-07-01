@@ -44,7 +44,6 @@ body { /*set fonts in body, so all child*/
 
 .logo {
   height: 35px;
-
 }
 
 .text-box {
@@ -52,11 +51,14 @@ body { /*set fonts in body, so all child*/
   top: 40%;
   left: 50%;
   transform: translate(-50%,-50%);
+  text-align: center; /*this works because of display inline-block*/
 }
 
 .heading-primary {
   color: #ffffff;
   text-transform: uppercase;
+  backface-visibility: hidden; /*this fixes shaking in animation*/
+  margin-bottom: 30px;
 }
 
 .heading-primary-main {
@@ -65,6 +67,14 @@ body { /*set fonts in body, so all child*/
   font-weight: 400;
   letter-spacing: 35px;
 
+  animation-name: moveInLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+
+  /*
+  animation-iteration-count: 3;
+  animation-delay: 1s;
+  */
 }
 
 .heading-primary-sub {
@@ -72,4 +82,70 @@ body { /*set fonts in body, so all child*/
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 17.4px;
+  animation: moveInRight 1s ease-out;
+
+  /* animation: is short for all code below!
+  animation-name: moveInRight;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  */
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+/*this talks about the states, if we don't style it'll be blue and purple!*/
+.btn:link,
+.btn:visited {
+  display: inline-block; /*this will make it have it's own space*/
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  border-radius: 100px;
+  /*putting 'all' means all are enabled, but you can be more speficic
+  Also this needs to be put in the initial state. This is short hand.*/
+  transition: all .2s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-white {
+  background-color: #ffffff;
+  color: #777;
 }
