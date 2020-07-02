@@ -123,6 +123,17 @@ body { /*set fonts in body, so all child*/
   }
 }
 
+@keyframes moveInBottom {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
 /*this talks about the states, if we don't style it'll be blue and purple!*/
 .btn:link,
 .btn:visited {
@@ -134,6 +145,7 @@ body { /*set fonts in body, so all child*/
   /*putting 'all' means all are enabled, but you can be more speficic
   Also this needs to be put in the initial state. This is short hand.*/
   transition: all .2s;
+  position: relative; /*this is for the after pseudoelement to position correctly*/
 }
 
 .btn:hover {
@@ -149,3 +161,41 @@ body { /*set fonts in body, so all child*/
   background-color: #ffffff;
   color: #777;
 }
+/*
+This is an after pseudostate
+*/
+.btn::after { /*treated as a child element of the button*/
+  content: "";
+  display: inline-block; /*we want it to look the same*/
+  width: 100%; /*will be the size of the button*/
+  height: 100%;
+  border-radius: 100px;
+  position: absolute; /*all this positioning to keep it behind the button*/
+  top: 0;
+  left: 0;
+  z-index: -1; /*this is the order in which elements are overlayed*/
+  transition: all .4s;
+}
+
+/*Absolute positioning works by finding first element with relative position,
+and taking it from there.*/
+
+/*Pseudo Elements :: are default last child element of tag. This is a virtual element.
+In this case we make it exactly the same as the original, so as to create
+an effect on the button, that is not the button itself!*/
+.btn-white::after {
+  background-color: #ffffff;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.8);
+  opacity: 0;
+}
+
+/*animation fill mode backwards automatically
+applies styles of 0% before animation starts*/
+.btn-animated{
+  animation: moveInBottom .5s ease-out .75s;
+  animation-fill-mode: backwards;
+}
+
